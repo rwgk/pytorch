@@ -69,7 +69,11 @@ void init_bindings(PyObject* module) {
   bind_ordered_dict<std::shared_ptr<nn::Module>>(cpp, "OrderedModuleDict");
 
   py::module nn = cpp.def_submodule("nn");
+#if defined(PYBIND11_INTERNALS_H_TAG)
   fflush(stderr); printf("\nLOOOK nn::Module PYBIND11_INTERNALS_H_TAG=%s %s:%d\n", PYBIND11_INTERNALS_H_TAG, __FILE__, __LINE__); fflush(stdout);
+#else
+  fflush(stderr); printf("\nLOOOK nn::Module PYBIND11_INTERNALS_H_TAG=NOTDEFINED %s:%d\n", __FILE__, __LINE__); fflush(stdout);
+#endif
   fflush(stderr); printf("\nLOOOK nn::Module PYBIND11_INTERNALS_ID=%s %s:%d\n", PYBIND11_INTERNALS_ID, __FILE__, __LINE__); fflush(stdout);
   add_module_bindings(
       py::class_<nn::Module, std::shared_ptr<nn::Module>>(nn, "Module"));
